@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import io.reactivex.Single
 import kotlinx.coroutines.*
 import pl.org.seva.myapplication.R
 import pl.org.seva.myapplication.main.extension.inflate
@@ -20,6 +19,8 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         var a: Deferred<Int>
+
+
 
         GlobalScope.launch {
             a = async { 1 }
