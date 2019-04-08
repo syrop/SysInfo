@@ -27,5 +27,7 @@ class KodeinModuleBuilder(private val ctx: Context) {
                 }
             }
         }
+
+        bind<VM>() with singleton { VM() }
     }
 }
