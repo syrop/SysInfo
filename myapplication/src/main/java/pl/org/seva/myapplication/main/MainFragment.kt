@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.coroutines.coroutineScope
 import pl.org.seva.myapplication.R
 import pl.org.seva.myapplication.main.extension.inflate
 import pl.org.seva.myapplication.main.extension.nav
@@ -17,6 +18,10 @@ class MainFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
             inflate(R.layout.fr_main, container)
+
+    suspend fun f() = coroutineScope {
+
+    }
 
     @SuppressLint("SetTextI18n", "CheckResult")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
