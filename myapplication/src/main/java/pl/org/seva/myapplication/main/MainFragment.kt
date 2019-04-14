@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import pl.org.seva.myapplication.R
 import pl.org.seva.myapplication.main.extension.getViewModel
 import pl.org.seva.myapplication.main.extension.inflate
+import pl.org.seva.myapplication.main.extension.observe
 
 class MainFragment : Fragment() {
 
@@ -19,6 +20,7 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         val vm = getViewModel<VM>()
+        vm.ld.observe(this) { println("wiktor $it")}
         vm.identity()
     }
 }

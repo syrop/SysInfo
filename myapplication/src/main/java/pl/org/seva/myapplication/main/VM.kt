@@ -1,25 +1,34 @@
 package pl.org.seva.myapplication.main
 
 import android.os.Looper
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class VM : ViewModel() {
 
+    val ld = MutableLiveData<Int>()
+
     private fun main() = Looper.getMainLooper().thread === Thread.currentThread()
+
+    private fun thread() = "${System.identityHashCode(Thread.currentThread())}"
+
+    suspend fun f2() = coroutineScope {
+        println("wiktor wewnętrzny thread ${thread()} ${main()}")
+    }
 
     fun identity() {
         viewModelScope.launch {
-            println("wiktor mój thread ${Looper.getMainLooper().thread} ${main()}")
+            println("wiktor mój thread ${thread()} ${main()}")
+            f2()
             withContext (Dispatchers.IO) {
-                println("wiktor nie mój thread ${Looper.getMainLooper().thread} ${main()}")
-                delay(5000)
+                println("wiktor nie mój thread ${thread()} ${main()}")
+                f2()
+                delay(4000)
             }
-            println("wiktor mój thread ${Looper.getMainLooper().thread} ${main()}")
+            println("wiktor mój thread ${thread()} ${main()}")
+            ld.value = 10
         }
     }
 
