@@ -1,4 +1,4 @@
-package pl.org.seva.myapplication.main
+package pl.org.seva.myapplication.main.init
 
 import androidx.appcompat.app.AppCompatDelegate
 
