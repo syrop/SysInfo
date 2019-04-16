@@ -20,15 +20,8 @@ class MainActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        GlobalScope.launch {
-            println("wiktor thread ${System.identityHashCode(Thread.currentThread())}")
-            withContext(Dispatchers.IO) {
-                println("wiktor thread ${System.identityHashCode(Thread.currentThread())}")
-            }
-            withContext(Dispatchers.Main) {
-                println("wiktor thread ${System.identityHashCode(Thread.currentThread())}")
-            }
-        }
+        setContentView(R.layout.act_main)
+        setSupportActionBar(toolbar)
+        NavigationUI.setupActionBarWithNavController(this, navController)
     }
-
 }

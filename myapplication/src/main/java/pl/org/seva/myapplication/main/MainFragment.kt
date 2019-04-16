@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import io.reactivex.Observable
 import io.reactivex.Single
+import kotlinx.android.synthetic.main.fr_main.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.rx2.await
 import kotlinx.coroutines.rx2.rxCompletable
@@ -27,13 +29,6 @@ class MainFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
             inflate(R.layout.fr_main, container)
 
-    suspend fun f() {
-
-    }
-
-    fun f1(block: () -> Unit) = Unit
-
-
     @SuppressLint("SetTextI18n", "CheckResult")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -41,14 +36,21 @@ class MainFragment : Fragment() {
         f1()
         f2()
 
-        val job = GlobalScope.launch gl@{
-            println("wiktor started")
-            repeat(10000000) {}
-            f()
-            yield()
-            println("wiktor performed")
-        }
-        repeat(1000000) {}
-        job.cancel()
+        val ld = MutableLiveData<Int>()
+        ld.observe(this) { label.text = it.toString() }
+        ld.value = 2
+        println("wiktor about to display the text")
+        println("wiktor ${label.text}")
+        println("wiktor displayed the text")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        println("wiktor ${label.text}")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        println("wiktor ${label.text}")
     }
 }
