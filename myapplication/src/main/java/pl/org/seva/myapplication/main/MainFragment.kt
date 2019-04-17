@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.fr_main.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.rx2.await
 import kotlinx.coroutines.rx2.rxCompletable
+import kotlinx.coroutines.sync.Mutex
 import pl.org.seva.myapplication.R
 import pl.org.seva.myapplication.main.extension.getViewModel
 import pl.org.seva.myapplication.main.extension.inflate
@@ -34,25 +35,21 @@ class MainFragment : Fragment() {
 
     suspend fun f() {
         suspendCancellableCoroutine<Int> { it.resume(2) }
-
+        Mutex()
     }
 
     fun f1(block: () -> Unit) = Unit
+
 
 
     @SuppressLint("SetTextI18n", "CheckResult")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val job = GlobalScope.launch gl@{
-            println("wiktor started")
-            repeat(100_000_000) {}
-            println("wiktor about to cancel")
-            f()
-            println("wiktor performed")
-        }
-        repeat(10_000_000) {}
-        job.cancel()
+        println("wiktor getting the viewmodel")
+        getViewModel<VM>()
+        repeat(1000_000_000) {}
+        println("wiktor got")
     }
 }
 
