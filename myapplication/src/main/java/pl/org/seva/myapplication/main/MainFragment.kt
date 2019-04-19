@@ -6,10 +6,7 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Observable
@@ -23,6 +20,7 @@ import pl.org.seva.myapplication.R
 import pl.org.seva.myapplication.main.extension.getViewModel
 import pl.org.seva.myapplication.main.extension.inflate
 import pl.org.seva.myapplication.main.extension.observe
+import pl.org.seva.myapplication.main.extension.viewModel
 import java.lang.Exception
 import java.util.*
 import kotlin.coroutines.resume
@@ -33,23 +31,20 @@ class MainFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
             inflate(R.layout.fr_main, container)
 
-    suspend fun f() {
-        suspendCancellableCoroutine<Int> { it.resume(2) }
-        Mutex()
-    }
-
-    fun f1(block: () -> Unit) = Unit
+    private val vm by lazy { ViewModelProviders.of(this).get(VM::class.java) }
 
 
 
     @SuppressLint("SetTextI18n", "CheckResult")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        println("wiktor $vm")
 
-        println("wiktor getting the viewmodel")
-        getViewModel<VM>()
-        repeat(1000_000_000) {}
-        println("wiktor got")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        println("wiktor destroy fragment")
     }
 }
 
