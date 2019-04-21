@@ -6,7 +6,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import io.reactivex.Observable
+import io.reactivex.Single
 import kotlinx.coroutines.*
+import kotlinx.coroutines.rx2.await
 import pl.org.seva.myapplication.R
 import pl.org.seva.myapplication.main.extension.inflate
 import java.util.concurrent.TimeUnit
@@ -24,6 +26,9 @@ class MainFragment : Fragment() {
                 .take(1)
                 .subscribe { continuation.resumeWith(Result.success(a)) }
         println("wiktor waited for $a")
+
+
+        GlobalScope.launch { Dispatchers.Main }
     }
 
     private suspend fun fancy() = coroutineScope {
