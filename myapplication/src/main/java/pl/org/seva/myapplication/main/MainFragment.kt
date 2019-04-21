@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import io.reactivex.Observable
 import io.reactivex.Single
+import kotlinx.android.synthetic.main.fr_main.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.rx2.await
 import pl.org.seva.myapplication.R
@@ -28,7 +29,7 @@ class MainFragment : Fragment() {
         println("wiktor waited for $a")
 
 
-        GlobalScope.launch { Dispatchers.Main }
+        GlobalScope.launch { label.text = "godd day" }
     }
 
     private suspend fun fancy() = coroutineScope {
