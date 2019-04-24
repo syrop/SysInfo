@@ -4,44 +4,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.*
-import io.reactivex.Observable
-import io.reactivex.Single
-import kotlinx.android.synthetic.main.fr_main.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.rx2.await
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.selects.select
 import pl.org.seva.myapplication.R
 import pl.org.seva.myapplication.main.extension.inflate
-import java.util.concurrent.TimeUnit
 
 class MainFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
             inflate(R.layout.fr_main, container)
 
-    private val vm by lazy { ViewModelProviders.of(this).get(VM::class.java) }
-
-    private suspend fun f(a: Int) = suspendCancellableCoroutine<Int> { continuation ->
-        println("wiktor waiting for $a")
-        Observable.timer(10,TimeUnit.SECONDS)
-                .take(1)
-                .subscribe { continuation.resumeWith(Result.success(a)) }
-        println("wiktor waited for $a")
-
-
-        GlobalScope.launch { label.text = "godd day" }
-    }
-
-    private suspend fun fancy() = coroutineScope {
-        val a = async { f(10) }
-        val b = async { f(20) }
-        return@coroutineScope 10
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val ch1 = Channel<Int>()
+        val ch2 = Channel<Int>()
+
         GlobalScope.launch {
-            println("wiktor plus ${fancy()}")
+
+        }
+        GlobalScope.launch {
+            for (a in 1..10) {
+                ch1.send(a)
+                ch2.send(a)
+            }
         }
     }
 }
