@@ -8,10 +8,7 @@ import org.kodein.di.generic.instance
 import org.kodein.di.generic.multiton
 import org.kodein.di.generic.singleton
 import pl.org.seva.myapplication.BuildConfig
-import pl.org.seva.myapplication.main.IPoCo
-import pl.org.seva.myapplication.main.PoCo
 import pl.org.seva.myapplication.main.VM
-import pl.org.seva.myapplication.main.poco
 import java.util.logging.Logger
 
 val Context.module get() = KodeinModuleBuilder(this).build()
@@ -31,8 +28,6 @@ class KodeinModuleBuilder(private val ctx: Context) {
                 }
             }
         }
-        bind<IPoCo>() with singleton { PoCo() }
-
         bind<VM>() with singleton { VM() }
     }
 }
