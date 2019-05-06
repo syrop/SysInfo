@@ -2,10 +2,13 @@ package pl.org.seva.myapplication.main
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import kotlinx.android.synthetic.main.fr_main.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import pl.org.seva.myapplication.R
+import java.time.LocalTime
 
 class MainFragment : Fragment(R.layout.fr_main) {
 
@@ -17,9 +20,15 @@ class MainFragment : Fragment(R.layout.fr_main) {
         br1.openSubscription()
         ch1.close()
 
-        GlobalScope.launch {
+        prompt.text = null
 
-            coroutineScope {
+        val ld = MutableLiveData<LocalTime>()
+        ld.value = null
+
+        val t = ld.value
+
+        GlobalScope.launch {
+            supervisorScope {
                 val i = launch {
                     try {
                         println("wiktor 0")
@@ -29,7 +38,9 @@ class MainFragment : Fragment(R.layout.fr_main) {
                     finally {
                         println("wiktor b")
                     }
+                    println("wiktor c")
                 }
+                delay(100)
                 i.cancel()
             }
 
