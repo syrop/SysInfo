@@ -1,5 +1,6 @@
 package pl.org.seva.myapplication.main
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
@@ -14,42 +15,13 @@ class MainFragment : Fragment(R.layout.fr_main) {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val ch1 = Channel<Int>()
-        val ch2 = Channel<Int>()
-        val br1 = BroadcastChannel<Int>(Channel.CONFLATED)
-        br1.openSubscription()
-        ch1.close()
+        val p1 = context!!.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val p2 = activity!!.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        println("wiktor equals ${p1 === p2}")
 
-        prompt.text = null
+    }
 
-        val ld = MutableLiveData<LocalTime>()
-        ld.value = null
-
-        val t = ld.value
-
-        GlobalScope.launch {
-            supervisorScope {
-                val i = launch {
-                    try {
-                        println("wiktor 0")
-                        delay(500)
-                        println("wiktor a")
-                    }
-                    finally {
-                        println("wiktor b")
-                    }
-                    println("wiktor c")
-                }
-                delay(100)
-                i.cancel()
-            }
-
-        }
-        GlobalScope.launch {
-            for (a in 1..10) {
-                ch1.send(a)
-                ch2.send(a)
-            }
-        }
+    companion object {
+        const val PREFS_NAME = "prefs"
     }
 }
