@@ -1,11 +1,14 @@
 package pl.org.seva.myapplication.main
 
 import android.os.Bundle
+import android.system.StructUtsname
 import androidx.fragment.app.Fragment
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import androidx.lifecycle.liveData
+import kotlinx.coroutines.*
 import pl.org.seva.myapplication.R
 import pl.org.seva.myapplication.main.init.instance
+import kotlin.coroutines.EmptyCoroutineContext
+import pl.org.seva.myapplication.main.extension.observe
 
 class MainFragment : Fragment(R.layout.fr_main) {
 
@@ -14,19 +17,34 @@ class MainFragment : Fragment(R.layout.fr_main) {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val str = instance<String>().provideDelegate(null, ::unit).value
+        val l = liveData<Int>(EmptyCoroutineContext + Dispatchers.IO) {
+            try {
+                while (true) {
+                    println("wiktor fajnie")
+                    delay(100)
+                }
+            }
+            finally {
+                println("wiktor jeszcze fajniej")
+            }
+        }
 
-        println("wiktor $str")
+        GlobalScope.launch {
+            println("wiktor wait one second")
 
-        val context = Job() + Dispatchers.Default
+            delay(1000)
 
-        val context1 = Dispatchers.Main + context
-        val context2 = context + Dispatchers.Main
+            withContext(Dispatchers.Main) {
+                l.observe(this@MainFragment) { }
+            }
 
+            println("wiktor wait one more second")
 
-        println("wiktor ${context1[Dispatchers.Default.key]}")
-        println("wiktor ${context2[Dispatchers.Default.key]}")
+            delay(1000)
 
-
+            withContext(Dispatchers.Main) {
+                l.removeObservers(this@MainFragment)
+            }
+        }
     }
 }
