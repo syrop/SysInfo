@@ -1,27 +1,32 @@
 package pl.org.seva.myapplication.main
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
-import kotlinx.android.synthetic.main.fr_main.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.BroadcastChannel
-import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import pl.org.seva.myapplication.R
-import java.time.LocalTime
+import pl.org.seva.myapplication.main.init.instance
 
 class MainFragment : Fragment(R.layout.fr_main) {
 
+    private val unit = Unit
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val p1 = context!!.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val p2 = activity!!.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        println("wiktor equals ${p1 === p2}")
 
-    }
+        val str = instance<String>().provideDelegate(null, ::unit).value
 
-    companion object {
-        const val PREFS_NAME = "prefs"
+        println("wiktor $str")
+
+        val context = Job() + Dispatchers.Default
+
+        val context1 = Dispatchers.Main + context
+        val context2 = context + Dispatchers.Main
+
+
+        println("wiktor ${context1[Dispatchers.Default.key]}")
+        println("wiktor ${context2[Dispatchers.Default.key]}")
+
+
     }
 }
