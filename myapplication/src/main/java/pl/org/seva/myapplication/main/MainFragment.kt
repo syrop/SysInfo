@@ -17,34 +17,21 @@ class MainFragment : Fragment(R.layout.fr_main) {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val l = liveData<Int>(EmptyCoroutineContext + Dispatchers.IO) {
-            try {
-                while (true) {
-                    println("wiktor fajnie")
-                    delay(100)
-                }
-            }
-            finally {
-                println("wiktor jeszcze fajniej")
-            }
-        }
-
         GlobalScope.launch {
-            println("wiktor wait one second")
-
-            delay(1000)
-
-            withContext(Dispatchers.Main) {
-                l.observe(this@MainFragment) { }
+            val scope = CoroutineScope(Job() + Dispatchers.Main)
+            scope.launch {
+                withContext(NonCancellable) {
+                    println("wiktor inside the block")
+                    delay(2000)
+                    yield()
+                    println("wiktor finished successfully")
+                }
+                yield()
+                println("wiktor not cancelled")
             }
-
-            println("wiktor wait one more second")
-
             delay(1000)
-
-            withContext(Dispatchers.Main) {
-                l.removeObservers(this@MainFragment)
-            }
+            scope.cancel()
+            println("wiktor canceled")
         }
     }
 }
