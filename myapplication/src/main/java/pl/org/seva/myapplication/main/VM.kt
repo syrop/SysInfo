@@ -1,14 +1,19 @@
 package pl.org.seva.myapplication.main
 
-import android.os.Looper
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 
 class VM : ViewModel() {
 
-    fun main() = Looper.getMainLooper().thread === Thread.currentThread()
-
-    override fun onCleared() {
-        super.onCleared()
-        println("wiktor on cleared")
+    val ld = liveData(viewModelScope.coroutineContext, Long.MAX_VALUE) {
+        try {
+            delay(Long.MAX_VALUE)
+            emit(0)
+        }
+        finally {
+            println("wiktor end of the liveData")
+        }
     }
 }
