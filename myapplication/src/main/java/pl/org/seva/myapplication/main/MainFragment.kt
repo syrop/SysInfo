@@ -14,7 +14,7 @@ class MainFragment : Fragment(R.layout.fr_main) {
         super.onActivityCreated(savedInstanceState)
 
         (vm.ld to this) {
-            println("wiktor result $0")
+            println("wiktor result $it")
         }
     }
 }
