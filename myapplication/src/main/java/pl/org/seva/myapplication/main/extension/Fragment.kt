@@ -1,5 +1,7 @@
 package pl.org.seva.myapplication.main.extension
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
@@ -15,3 +17,6 @@ fun Fragment.back() = findNavController().popBackStack()
 inline fun <reified R : ViewModel> Fragment.viewModel() = lazy { getViewModel<R>() }
 
 inline fun <reified R : ViewModel> Fragment.getViewModel() = activity!!.getViewModel<R>()
+
+fun Fragment.prefs(name: String): SharedPreferences =
+        requireContext().getSharedPreferences(name, Context.MODE_PRIVATE)
