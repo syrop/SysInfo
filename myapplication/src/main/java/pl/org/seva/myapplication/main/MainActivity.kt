@@ -6,10 +6,6 @@ import android.os.Bundle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import kotlinx.android.synthetic.main.act_main.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import pl.org.seva.myapplication.R
 
 class MainActivity : AppCompatActivity() {
@@ -24,4 +20,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         NavigationUI.setupActionBarWithNavController(this, navController)
     }
+
+    override fun onSupportNavigateUp() = navController.navigateUp()
 }

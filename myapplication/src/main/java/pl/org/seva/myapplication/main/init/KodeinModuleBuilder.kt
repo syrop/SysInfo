@@ -10,7 +10,6 @@ import org.kodein.di.generic.instance
 import org.kodein.di.generic.multiton
 import org.kodein.di.generic.singleton
 import pl.org.seva.myapplication.BuildConfig
-import pl.org.seva.myapplication.main.VM
 import java.util.logging.Logger
 
 val Context.module get() = KodeinModuleBuilder(this).build()
@@ -33,7 +32,6 @@ class KodeinModuleBuilder(private val ctx: Context) {
                 }
             }
         }
-        bind<VM>() with singleton { VM() }
         bind<String>() with singleton { "Hello" }
     }
 }
