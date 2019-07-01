@@ -3,15 +3,11 @@ package pl.org.seva.myapplication.main
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.navigation.navGraphViewModels
-import com.google.android.gms.maps.model.LatLng
-import io.reactivex.Single
-import io.reactivex.rxkotlin.Singles
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.fr_main.*
 import pl.org.seva.myapplication.R
 import pl.org.seva.myapplication.main.extension.invoke
+import pl.org.seva.myapplication.main.extension.nav
 
 class MainFragment : Fragment(R.layout.fr_main) {
 
@@ -21,24 +17,6 @@ class MainFragment : Fragment(R.layout.fr_main) {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        var a = 10
-        val f = { a++ }
-        f()
-        f()
-        println("wiktor $a")
-
+        next { nav(R.id.action_mainFragment_to_secondFragment) }
     }
 }
-
-class LastLocationPresenter(lastLocationView: (LatLng?) -> Unit) {
-
-    init {
-        GlobalScope.launch {
-            lastLocationView(getLastLocation())
-        }
-    }
-
-    private suspend fun getLastLocation(): LatLng? = null
-
-}
-

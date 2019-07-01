@@ -7,10 +7,10 @@ import pl.org.seva.myapplication.R
 import pl.org.seva.myapplication.main.extension.nav
 import pl.org.seva.myapplication.main.extension.invoke
 
-class SecondFragment : Fragment(R.layout.fr_main) {
+class ThirdFragment : Fragment(R.layout.fr_main) {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        next { nav(R.id.action_secondFragment_to_thirdFragment) }
+        next { nav(R.id.action_thirdFragment_to_secondFragment) }
     }
 }
