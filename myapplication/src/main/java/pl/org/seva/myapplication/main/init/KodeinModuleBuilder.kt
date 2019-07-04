@@ -14,9 +14,10 @@ import java.util.logging.Logger
 
 val Context.module get() = KodeinModuleBuilder(this).build()
 
-inline fun <reified T : Any> instance() = Kodein.global.instance<T>()
+inline fun <reified T : Any> instance(tag: Any? = null) = Kodein.global.instance<T>(tag)
 
-inline fun <reified A, reified T : Any> instance(arg: A) = Kodein.global.instance<A, T>(arg = arg)
+inline fun <reified A, reified T : Any> instance(tag: Any? = null, arg: A) =
+        Kodein.global.instance<A, T>(tag, arg = arg)
 
 inline val <T> KodeinProperty<T>.value get() = provideDelegate(null, Build::ID).value
 
@@ -32,6 +33,5 @@ class KodeinModuleBuilder(private val ctx: Context) {
                 }
             }
         }
-        bind<String>() with singleton { "Hello" }
     }
 }
