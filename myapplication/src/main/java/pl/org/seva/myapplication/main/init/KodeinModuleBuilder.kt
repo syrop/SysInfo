@@ -12,8 +12,6 @@ import org.kodein.di.generic.singleton
 import pl.org.seva.myapplication.BuildConfig
 import java.util.logging.Logger
 
-val Context.module get() = KodeinModuleBuilder(this).build()
-
 inline fun <reified T : Any> instance(tag: Any? = null) = Kodein.global.instance<T>(tag)
 
 inline fun <reified A, reified T : Any> instance(tag: Any? = null, arg: A) =

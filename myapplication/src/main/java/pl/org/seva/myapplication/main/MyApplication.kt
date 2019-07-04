@@ -6,7 +6,7 @@ import kotlinx.coroutines.launch
 import org.kodein.di.Kodein
 import org.kodein.di.conf.global
 import pl.org.seva.myapplication.main.init.bootstrap
-import pl.org.seva.myapplication.main.init.module
+import pl.org.seva.myapplication.main.extension.module
 
 @Suppress("unused")
 class MyApplication : Application() {
