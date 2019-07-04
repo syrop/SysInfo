@@ -11,9 +11,7 @@ import pl.org.seva.myapplication.main.extension.module
 @Suppress("unused")
 class MyApplication : Application() {
 
-    init {
-        Kodein.global.addImport(module)
-    }
+    init { Kodein.global.addImport(module) }
 
     override fun onCreate() {
         super.onCreate()
