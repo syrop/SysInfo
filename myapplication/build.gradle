@@ -54,10 +54,10 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha02'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-alpha02'
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-alpha02"
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0-beta01'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.1.0-beta01'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0-beta02'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.1.0-beta02'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
-    implementation 'com.google.android.material:material:1.1.0-alpha08'
+    implementation 'com.google.android.material:material:1.1.0-alpha09'
 
     // RxKotlin
     implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'

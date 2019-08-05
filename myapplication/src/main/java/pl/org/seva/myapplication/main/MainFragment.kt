@@ -3,34 +3,41 @@ package pl.org.seva.myapplication.main
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.navigation.navGraphViewModels
-import kotlinx.android.synthetic.main.fr_main.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import androidx.lifecycle.LiveData
+import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
+import io.reactivex.subjects.PublishSubject
 import pl.org.seva.myapplication.R
-import pl.org.seva.myapplication.main.extension.invoke
-import pl.org.seva.myapplication.main.extension.nav
+import pl.org.seva.myapplication.main.extension.plus
 
 class MainFragment : Fragment(R.layout.fr_main) {
 
+    inner class RxLiveData<T>(private val observable: Observable<T>) : LiveData<T>() {
 
-    interface I {
-        @JvmSynthetic
-        suspend fun a() = 1
+        private lateinit var disposable: Disposable
+
+        override fun onActive() {
+            super.onActive()
+            println("Wiktor state active: " + lifecycle.currentState)
+            disposable = observable.subscribe { postValue(it) }
+        }
+
+        override fun onInactive() {
+            super.onInactive()
+            println("wiktor state inactive: ${lifecycle.currentState}")
+            disposable.dispose()
+        }
     }
-
-    class C : I
-    private val vm by navGraphViewModels<VM>(R.id.nav_graph)
 
     @SuppressLint("CheckResult")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        next { nav(R.id.action_mainFragment_to_secondFragment) }
 
-        val a = C()
-        GlobalScope.launch {
-            println("wiktor ${a.a()}")
-        }
+        val obs = PublishSubject.create<Int>()
+
+        val ld = RxLiveData(obs)
+
+        (ld + this) { println("wiktor fajnie ")}
 
     }
 }

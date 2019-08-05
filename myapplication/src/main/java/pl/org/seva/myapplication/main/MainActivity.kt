@@ -21,5 +21,25 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController)
     }
 
+    override fun onStart() {
+        super.onStart()
+        println("wiktor on start")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        println("wiktor on stop")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        println("wiktor on resume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        println("wiktor on pause")
+    }
+
     override fun onSupportNavigateUp() = navController.navigateUp()
 }
