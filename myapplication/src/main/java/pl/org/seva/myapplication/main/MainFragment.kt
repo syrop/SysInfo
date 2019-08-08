@@ -19,12 +19,14 @@ class MainFragment : Fragment(R.layout.fr_main) {
         override fun onActive() {
             super.onActive()
             println("Wiktor state active: " + lifecycle.currentState)
+            Thread.dumpStack()
             disposable = observable.subscribe { postValue(it) }
         }
 
         override fun onInactive() {
             super.onInactive()
             println("wiktor state inactive: ${lifecycle.currentState}")
+            Thread.dumpStack()
             disposable.dispose()
         }
     }
