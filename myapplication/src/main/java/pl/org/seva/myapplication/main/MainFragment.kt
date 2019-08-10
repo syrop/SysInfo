@@ -11,9 +11,5 @@ class MainFragment : Fragment(R.layout.fr_main) {
     @SuppressLint("CheckResult")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-
-
-
     }
 }
