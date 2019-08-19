@@ -60,7 +60,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0-alpha09'
 
     // RxKotlin
-    implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
+    // RxKotlin 2.4.0 collides with RxJava 3.
+    // implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
     implementation 'io.reactivex.rxjava3:rxjava:3.0.0-RC1'
 
     // Testing
