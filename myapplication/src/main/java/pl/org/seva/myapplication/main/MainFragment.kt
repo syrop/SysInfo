@@ -22,28 +22,6 @@ class MainFragment : Fragment(R.layout.fr_main) {
         super.onActivityCreated(savedInstanceState)
         next { nav(R.id.action_mainFragment_to_secondFragment) }
 
-        val wiktorLiveData = object : LiveData<Unit>() {
-            override fun onActive() {
-                println("wiktor active")
-            }
 
-            override fun onInactive() {
-                println("wiktor inactive")
-
-            }
-        }
-
-        fun <T> LiveData<T>.reObserve(owner: LifecycleOwner, observer: Observer<T>) {
-            println("wiktor ${System.identityHashCode(observer)}")
-            removeObserver(observer)
-            observe(owner, observer)
-        }
-
-        fun zaba() {
-            wiktorLiveData.reObserve(this, Observer { "aa" })
-        }
-
-        zaba()
-        zaba()
     }
 }
