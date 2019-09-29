@@ -4,54 +4,35 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.Channel
 import pl.org.seva.myapplication.R
-import java.time.Duration
 
+@ExperimentalCoroutinesApi
 class MainFragment : Fragment(R.layout.fr_main) {
 
-    private val mux = Mutex()
-
-    private fun synchronizeThis(callback: () -> Unit) {
-        println("wiktor begin to sleep")
-        Thread.sleep(Duration.ofSeconds(2).toMillis())
-        println("wiktor slept")
-        callback()
-    }
-
-
-    private suspend fun wrappedSynchronizeThis() = withContext(Dispatchers.IO) {
-        suspendCancellableCoroutine<Unit> { continuation ->
-            synchronizeThis {
-                continuation.resumeWith(Result.success(Unit))
-            }
-        }
-    }
+    private val ch = BroadcastChannel<Boolean>(Channel.CONFLATED)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         lifecycleScope.launch {
-            mux.withLock {
-                wrappedSynchronizeThis()
-            }
+            delay(3000)
+            ch.offer(true)
         }
-        println("wiktor finished onViewCreated")
     }
 
     override fun onResume() {
         super.onResume()
-        println("wiktor on resume")
+
         lifecycleScope.launch {
-            mux.withLock {
-                println("wiktor in the synchronized block in onResume()")
-            }
+            val ch = ch.openSubscription()
+            println("wiktor waiting for")
+            val received = ch.receive()
+            println("wiktor received: $received")
+            ch.cancel()
         }
-        println("wiktor finished onResume()")
+        println("wiktor finished onResume")
     }
 }
