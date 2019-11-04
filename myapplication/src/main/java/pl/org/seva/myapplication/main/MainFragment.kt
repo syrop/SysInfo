@@ -30,6 +30,5 @@ class MainFragment : Fragment(R.layout.fr_main) {
                 println("wiktor exception")
             }
         }
-
     }
 }
