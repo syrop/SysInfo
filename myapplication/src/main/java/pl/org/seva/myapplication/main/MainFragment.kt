@@ -19,7 +19,13 @@ class MainFragment : Fragment(R.layout.fr_main) {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        1.apply {
 
+        }
+
+        1.let {
+
+        }
     }
 
     object Obj {
