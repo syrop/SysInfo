@@ -23,13 +23,6 @@ class KodeinModuleBuilder(private val ctx: Context) {
 
     fun build() = Kodein.Module("main") {
         bind<Bootstrap>() with singleton { Bootstrap() }
-        bind<Logger>() with multiton { tag: String ->
-            Logger.getLogger(tag)!!.apply {
-                if (!BuildConfig.DEBUG) {
-                    @Suppress("UsePropertyAccessSyntax")
-                    setFilter { false }
-                }
-            }
-        }
+        bind<Logger>() with multiton { tag: String -> logger(tag) }
     }
 }
