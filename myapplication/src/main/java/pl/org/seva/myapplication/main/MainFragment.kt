@@ -1,6 +1,6 @@
 package pl.org.seva.myapplication.main
 
-import android.graphics.Point
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -9,6 +9,7 @@ import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import pl.org.seva.myapplication.R
 import android.util.DisplayMetrics
+import java.util.*
 
 @ExperimentalCoroutinesApi
 class MainFragment : Fragment(R.layout.fr_main) {
@@ -16,22 +17,24 @@ class MainFragment : Fragment(R.layout.fr_main) {
     private val ch = BroadcastChannel<Boolean>(Channel.CONFLATED)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val display = requireActivity().windowManager.defaultDisplay
         val metrics = DisplayMetrics()
-        display.getMetrics(metrics)
+        requireActivity().windowManager.defaultDisplay.getMetrics(metrics)
         val heightPixels: Int = metrics.heightPixels
         val widthPixels: Int = metrics.widthPixels
-        val densityDpi: Int = metrics.densityDpi
-        val xdpi: Float = metrics.xdpi
-        val ydpi: Float = metrics.ydpi
-        println("wiktor widthPixels  = $widthPixels")
-        println("wiktor heightPixels = $heightPixels")
-        println("wiktor densityDpi   = $densityDpi")
-        println("wiktor xdpi         = $xdpi")
-        println("wiktor ydpi         = $ydpi")
-        val size = Point()
-        display.getSize(size)
-        println("wiktor screen width: ${size.x}")
-        println("wiktor screen height: ${size.y}")
+        val densityStr = when (metrics.densityDpi) {
+            DisplayMetrics.DENSITY_LOW -> "ldpi"
+            DisplayMetrics.DENSITY_MEDIUM -> "mdpi"
+            DisplayMetrics.DENSITY_HIGH -> "hdpi"
+            DisplayMetrics.DENSITY_XHIGH -> "xhdpi"
+            DisplayMetrics.DENSITY_XXHIGH -> "xxhdpi"
+            DisplayMetrics.DENSITY_XXXHIGH -> "xxxhdpi"
+            else -> "unknown"
+        }
+        val screenScr = "$widthPixels*$heightPixels-$densityStr"
+
+        val locale = Locale.getDefault()
+        val language = locale.toLanguageTag().substring(0, 2).toUpperCase(locale)
+
+        println("wiktor {\"Android\", \"${Build.VERSION.RELEASE}\", \"$language\", \"$screenScr\"}")
     }
 }

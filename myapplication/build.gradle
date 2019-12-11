@@ -50,19 +50,19 @@ dependencies {
 
     // Jetpack, AndroidX
     implementation 'androidx.core:core-ktx:1.2.0-rc01'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-rc02'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-rc02'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-rc02'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-rc02'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.0-rc02'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.2.0-rc02'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-rc03'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-rc03'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-rc03'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-rc03'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.0-rc03'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.2.0-rc03'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta3'
     implementation 'com.google.android.material:material:1.2.0-alpha02'
 
     // RxKotlin
     // RxKotlin 2.4.0 collides with RxJava 3.
     // implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.0-RC5'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.0-RC6'
 
     // Testing
     androidTestImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
