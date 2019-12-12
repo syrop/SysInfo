@@ -59,6 +59,10 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta3'
     implementation 'com.google.android.material:material:1.2.0-alpha02'
 
+    // Moshi
+    implementation("com.squareup.moshi:moshi-kotlin:1.9.2")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.9.2")
+
     // RxKotlin
     // RxKotlin 2.4.0 collides with RxJava 3.
     // implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
