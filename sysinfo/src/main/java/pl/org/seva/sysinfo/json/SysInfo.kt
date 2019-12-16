@@ -19,7 +19,7 @@ data class SysInfo(
         val model: String = Build.MODEL,
         val os: String = "Android",
         val osVersion: String = Build.VERSION.RELEASE,
-        val timeZone: String = TimeZone.getDefault().toZoneId().toString()) {
+        val timeZone: String = TimeZone.getDefault().id) {
 
     private class Serializer {
         private val moshi by instance<Moshi>()
